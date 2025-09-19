@@ -54,6 +54,7 @@ if __name__ == '__main__':
     binary_times = { "Первый": [], "Последний": [], "Средний": [], "Отсутствующий": [] } 
     for size in sizes:
         arr = list(range(size))  # создаём отсортированный массив
+        # цели поиска: первый элемент, последний, средний и отсутствующий
         targets = {
             "Первый": arr[0],
             "Последний": arr[-1],
@@ -62,14 +63,19 @@ if __name__ == '__main__':
         }
 
         print(f"\n--- Размер массива: {size} ---")
+         # перебираем разные варианты поиска
         for case, target in targets.items():
+            # замеряем время линейного и бинарного поиска
             lin_time = measure_time(linear_search, arr, target)
             bin_time = measure_time(binary_search, arr, target) 
-
+            #Сохраняем время в словаре
             linear_times[case].append(lin_time)
             binary_times[case].append(bin_time)
 
             print(f"Цель: {case} ({target}) | Линейный: {lin_time:.8f} мc | Бинарный: {bin_time:.8f} мc")
+
+    # --- ПОСТРОЕНИЕ ГРАФИКОВ ---
+    #1) Линейный и бинарный поиск в обычной шкале
     fig, axs = plt.subplots(2, 2, figsize=(14, 10))
     cases = ["Первый", "Последний", "Средний", "Отсутствующий"]
     for ax, case in zip(axs.flat, cases):
@@ -80,10 +86,10 @@ if __name__ == '__main__':
         ax.set_ylabel("Время (мс)")
         ax.grid(True)
         ax.legend()
-    plt.tight_layout()
+    plt.tight_layout() # равномерное распределение графиков
     plt.show()
 
-   
+   #2) Линейный и бинарный поиск в логарифмической шкале
     fig, axs = plt.subplots(2, 2, figsize=(14, 10))
     cases = ["Первый", "Последний", "Средний", "Отсутствующий"]
     for ax, case in zip(axs.flat, cases):
@@ -95,6 +101,6 @@ if __name__ == '__main__':
         ax.set_yscale("log")  # логарифмическая шкала по Y
         ax.grid(True, which="both")  # сетка для минорных и мажорных делений
         ax.legend()
-    plt.tight_layout()
+    plt.tight_layout() 
     plt.show()
     
