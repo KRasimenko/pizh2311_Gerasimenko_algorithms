@@ -2,6 +2,10 @@ import random
 import time
 
 import matplotlib
+import matplotlib
+import random
+import time
+
 import matplotlib.pyplot as plt
 matplotlib.use("TkAgg")
 
