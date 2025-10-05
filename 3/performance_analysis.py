@@ -1,51 +1,80 @@
 import timeit
 from collections import deque
-from linked_list import LinkedList   
+from linked_list import LinkedList
+import matplotlib.pyplot as plt
 
-def test_list_insert():
+# -----------------------
+# Функции для тестов
+# -----------------------
+def test_list_insert(n):
     lst = []
-    for i in range(1000):
-        lst.insert(0, i)   
-    #Сложность: O(n)
+    for i in range(n):
+        lst.insert(0, i)  # O(n)
 
-def test_linkedlist_insert():
+def test_linkedlist_insert(n):
     ll = LinkedList()
-    for i in range(1000):
-        ll.insert_at_start(i)  
-    #Сложность: O(1)
+    for i in range(n):
+        ll.insert_at_start(i)  # O(1)
 
-def test_list_pop():
-    lst = list(range(1000))
-    for _ in range(1000):
-        lst.pop(0)   
-    #Сложность: O(n)
+def test_list_pop(n):
+    lst = list(range(n))
+    for _ in range(n):
+        lst.pop(0)  # O(n)
 
-def test_deque_popleft():
-    dq = deque(range(1000))
-    for _ in range(1000):
-        dq.popleft()  
-    #Сложность: O(1)
+def test_deque_popleft(n):
+    dq = deque(range(n))
+    for _ in range(n):
+        dq.popleft()  # O(1)
 
+# -----------------------
+# Среднее время
+# -----------------------
+def average_time(stmt_func, n, repeat=5):
+    """Замер времени для функции stmt_func с n элементами"""
+    stmt = lambda: stmt_func(n)
+    times = [timeit.timeit(stmt, number=1) for _ in range(repeat)]
+    return sum(times) / repeat
 
-def average_time(stmt, number=5):
-    """Запускаем код number раз и возвращаем среднее время"""
-    times = timeit.repeat(stmt, globals=globals(), number=1, repeat=number)
-    return sum(times) / len(times)
-
-
+# -----------------------
+# Основной блок
+# -----------------------
 if __name__ == "__main__":
-    # Сравнение вставки
-    t_list = average_time("test_list_insert()")
-    t_ll = average_time("test_linkedlist_insert()")
+    sizes = [1000, 5000, 10000, 20000, 50000]  # размеры данных
+    times_list_insert = []
+    times_ll_insert = []
+    times_list_pop = []
+    times_deque_popleft = []
 
-    # Сравнение удаления
-    t_list_pop = average_time("test_list_pop()")
-    t_deque = average_time("test_deque_popleft()")
+    for n in sizes:
+        times_list_insert.append(average_time(test_list_insert, n))
+        times_ll_insert.append(average_time(test_linkedlist_insert, n))
+        times_list_pop.append(average_time(test_list_pop, n))
+        times_deque_popleft.append(average_time(test_deque_popleft, n))
 
-    print("Вставка 1000 элементов в начало:")
-    print(f"list.insert(0, x): {t_list:.6f} сек")
-    print(f"LinkedList.insert_at_start: {t_ll:.6f} сек")
+    # -----------------------
+    # Построение графиков
+    # -----------------------
+    plt.figure(figsize=(12, 6))
 
-    print("\nУдаление 1000 элементов из начала:")
-    print(f"list.pop(0): {t_list_pop:.6f} сек")
-    print(f"deque.popleft(): {t_deque:.6f} сек")
+    # Вставка в начало
+    plt.subplot(1, 2, 1)
+    plt.plot(sizes, times_list_insert, marker='o', label='list.insert(0, x)')
+    plt.plot(sizes, times_ll_insert, marker='o', label='LinkedList.insert_at_start')
+    plt.title("Вставка в начало")
+    plt.xlabel("Количество элементов")
+    plt.ylabel("Время выполнения (сек)")
+    plt.legend()
+    plt.grid(True)
+
+    # Удаление из начала
+    plt.subplot(1, 2, 2)
+    plt.plot(sizes, times_list_pop, marker='o', label='list.pop(0)')
+    plt.plot(sizes, times_deque_popleft, marker='o', label='deque.popleft()')
+    plt.title("Удаление из начала")
+    plt.xlabel("Количество элементов")
+    plt.ylabel("Время выполнения (сек)")
+    plt.legend()
+    plt.grid(True)
+
+    plt.tight_layout()
+    plt.show()
