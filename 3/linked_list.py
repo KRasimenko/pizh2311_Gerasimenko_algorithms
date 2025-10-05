@@ -5,17 +5,16 @@ class Node:
         self.next = None      # ссылка на следующий узел
 
 
-
 class LinkedList:
     """Класс связного списка"""
     def __init__(self):
         self.head = None      # голова списка (первый элемент)
-        self.tail = None      # хвост списка (последний элемент, для O(1) вставки в конец)
+        self.tail = None      # хвост списка (для O(1) вставки в конец)
 
     # Вставка в начало (O(1))
     def insert_at_start(self, data):
         new_node = Node(data)     # создаём новый узел
-        new_node.next = self.head # новый указывает на бывшую голову
+        new_node.next = self.head
         self.head = new_node      # теперь он — голова списка
         if self.tail is None:     # если список был пуст
             self.tail = new_node  # хвост тоже указывает на него
@@ -28,7 +27,8 @@ class LinkedList:
             self.head = new_node
             self.tail = new_node
         else:
-            self.tail.next = new_node # "старый хвост" указывает на новый узел
+            self.tail.next = new_node
+            # "старый хвост" указывает на новый узел
             self.tail = new_node      # теперь новый узел становится хвостом
         # Сложность: O(1) при наличии tail, иначе O(n)
 
@@ -44,7 +44,6 @@ class LinkedList:
         return removed_data
         # Сложность: O(1)
 
-    
     def traversal(self):
         current = self.head
         while current:

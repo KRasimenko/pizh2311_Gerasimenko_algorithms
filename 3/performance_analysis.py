@@ -1,25 +1,28 @@
 import timeit
 from collections import deque
-from linked_list import LinkedList
+
 import matplotlib.pyplot as plt
 
-# -----------------------
-# Функции для тестов
-# -----------------------
+from linked_list import LinkedList
+
+
 def test_list_insert(n):
     lst = []
     for i in range(n):
         lst.insert(0, i)  # O(n)
+
 
 def test_linkedlist_insert(n):
     ll = LinkedList()
     for i in range(n):
         ll.insert_at_start(i)  # O(1)
 
+
 def test_list_pop(n):
     lst = list(range(n))
     for _ in range(n):
         lst.pop(0)  # O(n)
+
 
 def test_deque_popleft(n):
     dq = deque(range(n))
@@ -29,15 +32,16 @@ def test_deque_popleft(n):
 # -----------------------
 # Среднее время
 # -----------------------
+
+
 def average_time(stmt_func, n, repeat=5):
     """Замер времени для функции stmt_func с n элементами"""
-    stmt = lambda: stmt_func(n)
+    def stmt():
+        return stmt_func(n)
     times = [timeit.timeit(stmt, number=1) for _ in range(repeat)]
     return sum(times) / repeat
 
-# -----------------------
-# Основной блок
-# -----------------------
+
 if __name__ == "__main__":
     sizes = [1000, 5000, 10000, 20000, 50000]  # размеры данных
     times_list_insert = []
@@ -51,15 +55,13 @@ if __name__ == "__main__":
         times_list_pop.append(average_time(test_list_pop, n))
         times_deque_popleft.append(average_time(test_deque_popleft, n))
 
-    # -----------------------
-    # Построение графиков
-    # -----------------------
     plt.figure(figsize=(12, 6))
 
     # Вставка в начало
     plt.subplot(1, 2, 1)
     plt.plot(sizes, times_list_insert, marker='o', label='list.insert(0, x)')
-    plt.plot(sizes, times_ll_insert, marker='o', label='LinkedList.insert_at_start')
+    plt.plot(sizes, times_ll_insert, marker='o',
+             label='LinkedList.insert_at_start')
     plt.title("Вставка в начало")
     plt.xlabel("Количество элементов")
     plt.ylabel("Время выполнения (сек)")

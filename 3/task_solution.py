@@ -1,13 +1,10 @@
 from collections import deque
 
-# -------------------------------
-# 1. Проверка сбалансированности скобок
-# -------------------------------
+
 def is_balanced_brackets(expression):
     """Проверяет, сбалансированы ли скобки в выражении"""
     stack = []
     pairs = {')': '(', '}': '{', ']': '['}
-
     for char in expression:
         if char in '({[':
             stack.append(char)  # открывающая скобка кладётся в стек
@@ -19,9 +16,6 @@ def is_balanced_brackets(expression):
     return not stack  # True, если стек пустой
 
 
-# -------------------------------
-# 2. Симуляция очереди печати
-# -------------------------------
 class PrintQueue:
     def __init__(self):
         self.queue = deque()
@@ -43,9 +37,6 @@ class PrintQueue:
         print("Текущая очередь:", list(self.queue))
 
 
-# -------------------------------
-# 3. Проверка палиндрома
-# -------------------------------
 def is_palindrome(sequence):
     """Проверяет, является ли последовательность палиндромом"""
     dq = deque(sequence)
