@@ -1,62 +1,77 @@
 from collections import deque
-from typing import Deque
 
-
-def is_balanced_brackets(s: str) -> bool:
-    """
-    Проверка сбалансированности скобок, использует стек на list.
-    Пример: "{[()]}" -> True
-    Сложность: O(n) по времени, O(n) по памяти.
-    """
-    pairs = {")": "(", "]": "[", "}": "{"}
+# -------------------------------
+# 1. Проверка сбалансированности скобок
+# -------------------------------
+def is_balanced_brackets(expression):
+    """Проверяет, сбалансированы ли скобки в выражении"""
     stack = []
-    for ch in s:
-        if ch in "([{":
-            stack.append(ch)
-        elif ch in ")]}":
-            if not stack or stack[-1] != pairs[ch]:
+    pairs = {')': '(', '}': '{', ']': '['}
+
+    for char in expression:
+        if char in '({[':
+            stack.append(char)  # открывающая скобка кладётся в стек
+        elif char in ')}]':
+            if not stack or stack[-1] != pairs[char]:
                 return False
-            stack.pop()
-    return not stack
+            stack.pop()  # удаляем последнюю открывающую скобку
+
+    return not stack  # True, если стек пустой
 
 
-def print_queue_simulation(tasks: list, process_time: float = 0.0) -> None:
-    """
-    Симуляция очереди задач печати с deque.
-    Enqueue: append (O(1)), Dequeue: popleft (O(1))
-    """
-    dq: Deque[str] = deque(tasks)
-    while dq:
-        task = dq.popleft()  # O(1)
-        print("Processing:", task)
-        if process_time:
-            import time
-            time.sleep(process_time)
+# -------------------------------
+# 2. Симуляция очереди печати
+# -------------------------------
+class PrintQueue:
+    def __init__(self):
+        self.queue = deque()
+
+    def add_job(self, job):
+        """Добавляем задачу в очередь"""
+        self.queue.append(job)
+
+    def process_job(self):
+        """Обрабатываем задачу из начала очереди"""
+        if self.queue:
+            job = self.queue.popleft()
+            print(f"Обрабатывается задача: {job}")
+        else:
+            print("Очередь пуста")
+
+    def show_queue(self):
+        """Показать все задачи в очереди"""
+        print("Текущая очередь:", list(self.queue))
 
 
-def is_palindrome_sequence(seq) -> bool:
-    """
-    Проверка палиндрома с использованием deque.
-    Сложность: O(n)
-    """
-    dq = deque(seq)
+# -------------------------------
+# 3. Проверка палиндрома
+# -------------------------------
+def is_palindrome(sequence):
+    """Проверяет, является ли последовательность палиндромом"""
+    dq = deque(sequence)
+
     while len(dq) > 1:
-        if dq.popleft() != dq.pop():
+        if dq.popleft() != dq.pop():  # сравниваем первый и последний элементы
             return False
     return True
 
 
+# -------------------------------
+# Пример использования
+# -------------------------------
 if __name__ == "__main__":
-    print("Баланс скобок:")
-    tests = ["{[()]}", "{[(])}", "(()", ""]
-    for t in tests:
-        print(t, "->", is_balanced_brackets(t))
+    # 1. Скобки
+    expr = "{[()()]}"
+    print(f"{expr} сбалансировано? -> {is_balanced_brackets(expr)}")
 
-    print("\nСимуляция очереди печати:")
-    tasks = ["doc1.pdf", "photo.jpg", "report.docx"]
-    print_queue_simulation(tasks, process_time=0)  # process_time можно поставить >0
+    # 2. Очередь печати
+    pq = PrintQueue()
+    pq.add_job("Документ 1")
+    pq.add_job("Документ 2")
+    pq.show_queue()
+    pq.process_job()
+    pq.show_queue()
 
-    print("\nПалиндромы:")
-    seqs = ["radar", "hello", [1, 2, 3, 2, 1], [1, 2, 3]]
-    for s in seqs:
-        print(s, "->", is_palindrome_sequence(s))
+    # 3. Палиндром
+    seq = "мир или рим"
+    print(f"{seq} это палиндром? -> {is_palindrome(seq)}")

@@ -1,94 +1,54 @@
-from typing import Any, Iterator, Optional
-
-
 class Node:
-    """Узел связного списка."""
-    def __init__(self, data: Any):
-        self.data = data
-        self.next: Optional["Node"] = None
+    """Класс узла связного списка"""
+    def __init__(self, data):
+        self.data = data      # данные в узле
+        self.next = None      # ссылка на следующий узел
 
-    def __repr__(self):
-        return f"Node({self.data})"
 
 
 class LinkedList:
-    """Простой односвязный список с хвостом (tail)."""
-
+    """Класс связного списка"""
     def __init__(self):
-        self.head: Optional[Node] = None
-        self.tail: Optional[Node] = None
-        self._size = 0  
+        self.head = None      # голова списка (первый элемент)
+        self.tail = None      # хвост списка (последний элемент, для O(1) вставки в конец)
 
-    def insert_at_start(self, data: Any) -> None:
-        """Вставка в начало — O(1)."""
-        # O(1)
-        new_node = Node(data)
-        new_node.next = self.head
-        self.head = new_node
-        if self.tail is None:  # если был пустой список
-            self.tail = new_node
-        self._size += 1
+    # Вставка в начало (O(1))
+    def insert_at_start(self, data):
+        new_node = Node(data)     # создаём новый узел
+        new_node.next = self.head # новый указывает на бывшую голову
+        self.head = new_node      # теперь он — голова списка
+        if self.tail is None:     # если список был пуст
+            self.tail = new_node  # хвост тоже указывает на него
+        # Сложность: O(1)
 
-    def insert_at_end(self, data: Any) -> None:
-        """Вставка в конец — O(1) благодаря хвосту (tail)."""
-        # O(1)
+    # Вставка в конец (O(1) при хвосте, иначе O(n))
+    def insert_at_end(self, data):
         new_node = Node(data)
-        if self.head is None:
+        if self.head is None:     # если список пуст
             self.head = new_node
             self.tail = new_node
         else:
-            assert self.tail is not None
-            self.tail.next = new_node
-            self.tail = new_node
-        self._size += 1
+            self.tail.next = new_node # "старый хвост" указывает на новый узел
+            self.tail = new_node      # теперь новый узел становится хвостом
+        # Сложность: O(1) при наличии tail, иначе O(n)
 
-    def delete_from_start(self) -> Optional[Any]:
-        """Удаление из начала — O(1). Возвращает удалённые данные или None."""
-        # O(1)
+    # Удаление из начала (O(1))
+    def delete_from_start(self):
         if self.head is None:
-            return None
-        removed = self.head
-        self.head = self.head.next
-        if self.head is None:  # если список стал пуст
+            print("Список пуст, нечего удалять")
+            return
+        removed_data = self.head.data   # данные удаляемого узла
+        self.head = self.head.next      # смещаем голову на следующий узел
+        if self.head is None:           # если список стал пустым
             self.tail = None
-        self._size -= 1
-        return removed.data
+        return removed_data
+        # Сложность: O(1)
 
-    def traversal(self) -> None:
-        """Печать всех элементов в порядке следования — O(n)."""
-        # O(n)
-        cur = self.head
-        out = []
-        while cur:
-            out.append(str(cur.data))
-            cur = cur.next
-        print(" -> ".join(out) + " -> None")
-
-    def __len__(self) -> int:
-        return self._size
-
-    def __iter__(self) -> Iterator[Any]:
-        cur = self.head
-        while cur:
-            yield cur.data
-            cur = cur.next
-
-
-if __name__ == "__main__":
     
-    ll = LinkedList()
-    ll.insert_at_start(3)
-    ll.insert_at_start(2)
-    ll.insert_at_start(1)  # 1 -> 2 -> 3
-    print("После insert_at_start:")
-    ll.traversal()
-
-    ll.insert_at_end(4)
-    ll.insert_at_end(5)  # 1 -> 2 -> 3 -> 4 -> 5
-    print("После insert_at_end:")
-    ll.traversal()
-
-    removed = ll.delete_from_start()  # удаляет 1
-    print("Удалено:", removed)
-    ll.traversal()
-    print("Длина:", len(ll))
+    def traversal(self):
+        current = self.head
+        while current:
+            print(current.data, end=" -> ")
+            current = current.next
+        print("None")   # конец списка
+        # Сложность: O(n)
