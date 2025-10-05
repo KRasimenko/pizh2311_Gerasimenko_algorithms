@@ -29,10 +29,6 @@ def test_deque_popleft(n):
     for _ in range(n):
         dq.popleft()  # O(1)
 
-# -----------------------
-# Среднее время
-# -----------------------
-
 
 def average_time(stmt_func, n, repeat=5):
     """Замер времени для функции stmt_func с n элементами"""
@@ -43,6 +39,16 @@ def average_time(stmt_func, n, repeat=5):
 
 
 if __name__ == "__main__":
+    pc_info = """
+    Конфигурация ПК:
+    - Процессор: 11th Gen Intel(R) Core(TM) i5-1155G7 @ 2.50 GHz
+    - Оперативная память: 16,0 ГБ (доступно: 15,8 ГБ)
+    - Тип системы: 64-разрядная операционная система, процессор x64
+    - ОС: Windows 11 Pro
+    - Версия: 24H2
+    - Сборка ОС: 26100.4946
+    - Python: 3.13.3
+    """
     sizes = [1000, 5000, 10000, 20000, 50000]  # размеры данных
     times_list_insert = []
     times_ll_insert = []

@@ -1,7 +1,6 @@
 import time
 
 import matplotlib.pyplot as plt
-
 from collections.abc import Callable
 
 
