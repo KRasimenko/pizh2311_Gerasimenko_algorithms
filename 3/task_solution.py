@@ -47,9 +47,6 @@ def is_palindrome(sequence):
     return True
 
 
-# -------------------------------
-# Пример использования
-# -------------------------------
 if __name__ == "__main__":
     # 1. Скобки
     expr = "{[()()]}"
@@ -65,4 +62,6 @@ if __name__ == "__main__":
 
     # 3. Палиндром
     seq = "мир или рим"
+    print(f"{seq} это палиндром? -> {is_palindrome(seq)}")
+    seq = "привет"
     print(f"{seq} это палиндром? -> {is_palindrome(seq)}")
