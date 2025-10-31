@@ -13,7 +13,11 @@ def fibonacci(n: int) -> int:
     """
     Рекурсивное вычисление n-го числа Фибоначчи.
     Последовательность: 0, 1, 1, 2, 3, 5, 8, ...
+    в глобальной переменной call_count_naive считает
+    количество вызовов функции
     """
+    global call_count_naive
+    call_count_naive += 1
     if n <= 1:
         return n
     return fibonacci(n - 1) + fibonacci(n - 2)
@@ -37,4 +41,3 @@ def fast_power(a: int, n: int) -> int:
         return a * fast_power(a, n - 1)
     # Временная сложность: O(log n)
     # Глубина рекурсии: O(log n)
-
