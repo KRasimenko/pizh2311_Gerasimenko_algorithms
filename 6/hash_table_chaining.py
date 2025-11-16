@@ -1,4 +1,5 @@
-from hash_function import poly_hash, djb2
+from hash_function import djb2, poly_hash
+
 
 class HashTableChaining:
     def __init__(self, size=8, hash_func=poly_hash):
@@ -44,6 +45,7 @@ class HashTableChaining:
 # Средняя сложность O(1)
 # Наихудшая слольность O(n)
 
+
 class HashTableLinear:
     def __init__(self, size=8, hash_func=djb2):
         self.size = size
@@ -61,7 +63,7 @@ class HashTableLinear:
                 self.table[idx] = (key, value)
                 return
         raise Exception("Таблица переполнена")
-    
+
     def find(self, key):
         """Поиск элемента по ключу."""
         h = self._hash(key)
@@ -74,7 +76,8 @@ class HashTableLinear:
         return None
 # Средняя сложность O(1)
 # Наихудшая слольность O(n)
-    
+
+
 class HashTableDouble:
     def __init__(self, size=8, hash_func1=poly_hash, hash_func2=djb2):
         self.size = size
@@ -97,7 +100,7 @@ class HashTableDouble:
                 self.table[idx] = (key, value)
                 return
         raise Exception("Таблица переполнена")
-    
+
     def find(self, key):
         """Поиск элемента по ключу."""
         h1 = self._hash1(key)

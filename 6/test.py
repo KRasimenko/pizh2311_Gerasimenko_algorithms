@@ -1,12 +1,12 @@
 import unittest
 
-from hash_table_chaining import HashTableChaining, HashTableDouble, HashTableLinear
+from hash_table_chaining import (HashTableChaining, HashTableDouble,
+                                    HashTableLinear)
+
 
 class TestHashTables(unittest.TestCase):
 
-    # ---------------------------
     # Тесты для метода цепочек
-    # ---------------------------
     def test_chaining_insert_and_find(self):
         """Проверка добавления и поиска в HashTableChaining"""
         ht = HashTableChaining()
@@ -25,7 +25,6 @@ class TestHashTables(unittest.TestCase):
         self.assertEqual(ht.find("a"), 1)
         self.assertEqual(ht.find("b"), 2)
 
-
     def test_chaining_resize(self):
         """Проверка увеличения размера таблицы при переполнении"""
         ht = HashTableChaining(size=2)
@@ -34,11 +33,9 @@ class TestHashTables(unittest.TestCase):
         self.assertGreaterEqual(ht.size, 4)  # таблица увеличилась
         self.assertEqual(ht.find("k0"), 0)
 
-
-    # ---------------------------
     # Тесты для линейного пробирования
-    # ---------------------------
     def test_linear_insert_and_find(self):
+
         """Проверка добавления и поиска в HashTableLinear"""
         ht = HashTableLinear()
         ht.insert("apple", 10)
@@ -66,11 +63,9 @@ class TestHashTables(unittest.TestCase):
         with self.assertRaises(Exception):  # таблица переполнена
             ht.insert("c", 3)
 
-
-    # ---------------------------
     # Тесты для двойного хеширования
-    # ---------------------------
     def test_double_insert_and_find(self):
+
         """Проверка добавления и поиска в HashTableDouble"""
         ht = HashTableDouble()
         ht.insert("apple", 10)

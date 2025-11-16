@@ -12,7 +12,6 @@ def random_string(n=8):
     return ''.join(random.choice(string.ascii_lowercase) for _ in range(n))
 
 
-
 # 1. Замер времени вставки/поиска + графики
 def benchmark_time(table_class, name):
     print(f"\n=== {name} ===")
