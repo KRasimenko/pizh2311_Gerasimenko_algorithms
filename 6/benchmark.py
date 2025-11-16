@@ -7,16 +7,13 @@ from hash_table_chaining import HashTableChaining
 from hash_function import simple_hash, poly_hash, djb2
 
 
-# -----------------------------
 # Генерация случайных строк
-# -----------------------------
 def random_string(n=8):
     return ''.join(random.choice(string.ascii_lowercase) for _ in range(n))
 
 
-# ============================================================
+
 # 1. Замер времени вставки/поиска + графики
-# ============================================================
 def benchmark_time(table_class, name):
     print(f"\n=== {name} ===")
 
@@ -49,9 +46,7 @@ def benchmark_time(table_class, name):
 
         print(f"  LF={lf}: insert={insert_time:.4f}s  find={find_time:.4f}s")
 
-    # -----------------------------
     # Построение графиков
-    # -----------------------------
     plt.figure(figsize=(10, 5))
     plt.plot(load_factors, results_insert, marker='o')
     plt.title("Время вставки vs коэффициент заполнения")
@@ -71,9 +66,7 @@ def benchmark_time(table_class, name):
     print("Графики сохранены: time_insert_vs_load.png, time_find_vs_load.png")
 
 
-# ============================================================
 # 2. Исследование коллизий + гистограммы
-# ============================================================
 def benchmark_collisions():
     print("\n=== Сравнение количества коллизий ===")
 
@@ -97,9 +90,7 @@ def benchmark_collisions():
 
         print(f"{name:12}  коллизий = {collisions}")
 
-        # -----------------------------
         # Строим гистограмму коллизий
-        # -----------------------------
         plt.figure(figsize=(10, 5))
         plt.hist(buckets, bins=50)
         plt.title(f"Распределение коллизий: {name}")
@@ -111,9 +102,6 @@ def benchmark_collisions():
         print(f"Гистограмма сохранена: {fname}")
 
 
-# ============================================================
-# Запуск
-# ============================================================
 if __name__ == "__main__":
     # 1) сравнение времени
     benchmark_time(HashTableChaining, "Метод цепочек")
