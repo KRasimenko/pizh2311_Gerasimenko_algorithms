@@ -49,6 +49,7 @@ if __name__ == "__main__":
     - Сборка ОС: 26100.4946
     - Python: 3.13.3
     """
+    print(pc_info)
     sizes = [1000, 5000, 10000, 20000, 50000]  # размеры данных
     times_list_insert = []
     times_ll_insert = []
