@@ -8,7 +8,7 @@ class TestBinarySearchTree(unittest.TestCase):
     def setUp(self):
         self.tree = BinarySearchTree()
 
-    # helpers 
+    # helpers
     def insert_values(self, values):
         for v in values:
             self.tree.insert(v)
@@ -49,7 +49,6 @@ class TestBinarySearchTree(unittest.TestCase):
         self.assertIsNone(self.tree.search(3))
         self.assertTrue(self.is_valid_bst(self.tree.root))
 
-    
     # TEST DELETE — удаление с одним ребёнком
     def test_delete_one_child(self):
         # У узла 3 есть только левый ребёнок (2)
@@ -77,6 +76,7 @@ class TestBinarySearchTree(unittest.TestCase):
         self.insert_values([5, 3, 7, 2, 4])
 
         result = []
+
         def capture_inorder(node):
             if node:
                 capture_inorder(node.left)

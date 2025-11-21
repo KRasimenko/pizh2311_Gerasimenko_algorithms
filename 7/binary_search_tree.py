@@ -97,6 +97,7 @@ class BinarySearchTree:
         while current.right:
             current = current.right
         return current
+
     def inorder(self, node):
         # Левый - Корень - Правый
         # Сложность: O(n)
@@ -124,7 +125,6 @@ class BinarySearchTree:
     def inorder_iterative(self):
         # Сложность: O(n)
         # Мы посещаем каждый узел ровно один раз.
-        
         stack = []
         current = self.root
 
@@ -160,6 +160,20 @@ class BinarySearchTree:
 
         return (self._validate(node.left, low, node.value) and
                 self._validate(node.right, node.value, high))
+ 
+    def print_tree(self, node=None, indent="", is_left=True):
+        if node is None:
+            node = self.root
+            if node is None:
+                print("<empty>")
+                return
 
-        
+        if node.right:
+            self.print_tree(node.right, indent +
+                            ("    " if is_left else "│   "), False)
 
+        print(indent + ("└── " if is_left else "┌── ") + str(node.value))
+
+        if node.left:
+            self.print_tree(node.left, indent +
+                            ("    " if is_left else "│   "), True)
