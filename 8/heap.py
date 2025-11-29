@@ -20,7 +20,7 @@ class Heap:
             left = 2 * index + 1
             right = 2 * index + 2
             target = index
-            if left < size and self._compare(self.data[left], 
+            if left < size and self._compare(self.data[left],
                                              self.data[target]):
                 target = left
             if right < size and self._compare(self.data[right],

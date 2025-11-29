@@ -1,5 +1,6 @@
 from heap import Heap
 
+
 class PriorityQueue:
     def __init__(self):
         self.heap = Heap(is_min=True)
