@@ -54,7 +54,8 @@ def knapsack_01(values, weights, W):
         for w in range(W + 1):
             if weights[i - 1] <= w:
                 # Берём максимум: либо не берём предмет, либо берём его
-                dp[i][w] = max(dp[i - 1][w], dp[i - 1][w - weights[i - 1]] + values[i - 1])
+                dp[i][w] = max(dp[i - 1][w], dp[i - 1][w - weights[i - 1]] +
+                               values[i - 1])
             else:
                 # Не можем взять предмет, оставляем предыдущий максимум
                 dp[i][w] = dp[i - 1][w]
@@ -78,7 +79,7 @@ def lcs(X, Y):
             else:
                 dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
 
-    # Восстановление LCS 
+    # Восстановление LCS
     i, j = m, n
     lcs_seq = []
 
@@ -118,12 +119,12 @@ def levenshtein_distance(X, Y):
     for i in range(1, m + 1):
         for j in range(1, n + 1):
             if X[i - 1] == Y[j - 1]:
-                dp[i][j] = dp[i - 1][j - 1]  # символы совпадают, операции не нужны
+                dp[i][j] = dp[i - 1][j - 1]  # символы совпадают
             else:
                 dp[i][j] = 1 + min(
                     dp[i - 1][j],    # удаление
                     dp[i][j - 1],    # вставка
-                    dp[i - 1][j - 1] # замена
+                    dp[i - 1][j - 1]  # замена
                 )
 
     return dp[m][n]
